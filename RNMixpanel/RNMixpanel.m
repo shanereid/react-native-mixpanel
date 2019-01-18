@@ -42,6 +42,9 @@ RCT_EXPORT_METHOD(sharedInstanceWithToken:(NSString *)apiToken
         [newInstances setObject:instance forKey:apiToken];
         instances = [NSDictionary dictionaryWithDictionary:newInstances];
         [instance applicationDidBecomeActive:nil];
+        [instance joinExperimentsWithCallback:^(void) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"MPTWEAKSINITIALISATION" object:nil];
+        }];
         resolve(nil);
     }
 }
